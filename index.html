@@ -7,7 +7,41 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#fff5fa',
+                            100: '#ffe9f5',
+                            200: '#ffd6eb',
+                            300: '#ffc4e1',
+                            400: '#ffb3d9',
+                            500: '#ff99cc',
+                            600: '#ff8cc6',
+                            700: '#ff6b9d',
+                            800: '#ff5a8a',
+                            900: '#ff3366'
+                        },
+                        gray: {
+                            50: '#fff5fa',
+                            100: '#ffe9f5',
+                            200: '#ffd6eb',
+                            300: '#ffc4e1',
+                            400: '#ffb3d9',
+                            500: '#ff99cc',
+                            600: '#d9a3bf',
+                            700: '#c77799',
+                            800: '#a05580',
+                            900: '#7d3d60'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -23,25 +57,25 @@
     <style>
         /* Custom Brand Color Definition */
         :root {
-            --brand-color: #e57172;
-            --brand-light: #fff0f0;
-            --brand-dark: #c04d4e;
+            --brand-color: #ffb3d9;
+            --brand-light: #ffe4f2;
+            --brand-dark: #ff8cc6;
             /* Media Colors */
-            --hpb-color: #9f1448;
-            --hpb-light: #fff0f5;
-            --meta-color: #0668E1;
-            --meta-light: #e0f2fe;
-            --hone-color: #9e8125;
-            --hone-light: #fefce8;
-            --flyer-color: #10b981;
-            --flyer-light: #d1fae5;
-            --hp-color: #e57172; 
-            --hp-light: #fff0f0;
-            --referral-color: #f59e0b; /* Referral (Amber/Orange) */
-            --referral-light: #fffbeb;
+            --hpb-color: #ff99cc;
+            --hpb-light: #ffe6f2;
+            --meta-color: #ffb3d9;
+            --meta-light: #ffe4f2;
+            --hone-color: #ffc4e1;
+            --hone-light: #fff0f8;
+            --flyer-color: #ffcce5;
+            --flyer-light: #fff5fa;
+            --hp-color: #ffb3d9;
+            --hp-light: #ffe4f2;
+            --referral-color: #ffa6d4; /* Referral (Light Pink) */
+            --referral-light: #ffe9f5;
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f8fafc; color: #334155; }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #fff0f8; color: #5a3648; }
         .chart-container { position: relative; width: 100%; height: 300px; }
         
         /* Utility Classes */
@@ -52,11 +86,11 @@
         
         /* Tab Styles */
         .tab-btn.active { border-bottom: 3px solid var(--brand-color); color: var(--brand-color); font-weight: 700; }
-        .tab-btn { border-bottom: 3px solid transparent; color: #64748b; }
+        .tab-btn { border-bottom: 3px solid transparent; color: #c77799; }
 
         /* Media Switch Buttons */
         .media-switch-container {
-            display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: #f1f5f9; padding: 0.5rem; border-radius: 12px; overflow-x: auto;
+            display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: #ffe4f2; padding: 0.5rem; border-radius: 12px; overflow-x: auto;
         }
         .media-switch-btn {
             flex: 1; min-width: 90px; padding: 10px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -86,12 +120,12 @@
         .media-switch-btn.referral i { color: var(--referral-color); }
 
         /* Dashboard View Toggle */
-        .dash-view-toggle { display: inline-flex; background: #e2e8f0; padding: 4px; border-radius: 8px; flex-wrap: wrap; }
-        .dash-toggle-btn { padding: 6px 12px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; cursor: pointer; color: #64748b; transition: all 0.2s; white-space: nowrap; }
+        .dash-view-toggle { display: inline-flex; background: #ffd6eb; padding: 4px; border-radius: 8px; flex-wrap: wrap; }
+        .dash-toggle-btn { padding: 6px 12px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; cursor: pointer; color: #c77799; transition: all 0.2s; white-space: nowrap; }
         .dash-toggle-btn.active { background: white; color: var(--brand-color); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         /* Progress Bar */
-        .progress-bar-bg { background-color: #e2e8f0; border-radius: 9999px; height: 8px; width: 100%; overflow: hidden; }
+        .progress-bar-bg { background-color: #ffd6eb; border-radius: 9999px; height: 8px; width: 100%; overflow: hidden; }
         .progress-bar-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease-out; }
         
         /* Modal */
@@ -100,18 +134,18 @@
 
         /* Chat Bubbles */
         .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.6; margin-bottom: 12px; animation: fadeIn 0.3s ease-in-out; }
-        .chat-bubble.user { background-color: #475569; color: white; margin-left: auto; border-bottom-right-radius: 2px; }
-        .chat-bubble.ai { background-color: #ffffff; color: #334155; margin-right: auto; border-bottom-left-radius: 2px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .chat-bubble.user { background-color: #ff99cc; color: white; margin-left: auto; border-bottom-right-radius: 2px; }
+        .chat-bubble.ai { background-color: #ffffff; color: #5a3648; margin-right: auto; border-bottom-left-radius: 2px; border: 1px solid #ffd6eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .chat-bubble p { margin: 0; }
         .chat-bubble ul { list-style-type: disc; margin-left: 1.5em; }
         .chat-bubble ol { list-style-type: decimal; margin-left: 1.5em; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Enhanced AI Mode Toggle */
-        .ai-mode-container { background-color: #e2e8f0; padding: 4px; border-radius: 8px; display: flex; position: relative; width: 100%; max-width: 320px; }
-        .ai-mode-btn { flex: 1; padding: 8px 12px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 4px; border: none; color: #64748b; white-space: nowrap; }
+        .ai-mode-container { background-color: #ffd6eb; padding: 4px; border-radius: 8px; display: flex; position: relative; width: 100%; max-width: 320px; }
+        .ai-mode-btn { flex: 1; padding: 8px 12px; font-size: 0.75rem; font-weight: 600; border-radius: 6px; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 4px; border: none; color: #c77799; white-space: nowrap; }
         .ai-mode-btn.active { background-color: white; color: var(--brand-color); box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-weight: 700; }
-        .ai-mode-btn:hover:not(.active) { background-color: rgba(255,255,255,0.5); color: #475569; }
+        .ai-mode-btn:hover:not(.active) { background-color: rgba(255,255,255,0.5); color: #a05580; }
 
         /* Data Input Table */
         .input-cell { @apply bg-white border border-slate-300 rounded px-1 py-1.5 text-center w-full text-xs focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-shadow font-medium text-slate-700; }
@@ -128,16 +162,16 @@
         @keyframes typing { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(-5px); opacity: 1; } }
 
         /* Smart Parser Area */
-        .smart-parser-area { background: #ffffff; border: 2px dashed #cbd5e1; transition: all 0.3s ease; }
-        .smart-parser-area:hover, .smart-parser-area:focus-within { border-color: var(--brand-color); background: #fffcfc; }
-        
+        .smart-parser-area { background: #ffffff; border: 2px dashed #ffc4e1; transition: all 0.3s ease; }
+        .smart-parser-area:hover, .smart-parser-area:focus-within { border-color: var(--brand-color); background: #fffafd; }
+
         /* Trend Arrows */
-        .trend-up { color: #ef4444; } /* Red for bad if cost, or good if sales? Context dependent. Here red=warning usually, green=good */
-        .trend-down { color: #10b981; }
-        .trend-neutral { color: #94a3b8; }
+        .trend-up { color: #ff6b9d; } /* Pink for trend up */
+        .trend-down { color: #ffcce5; }
+        .trend-neutral { color: #d9a3bf; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body>
 
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
@@ -581,20 +615,20 @@
 
         // Color Mapping for Charts
         const mediaColors = {
-            hpb: '#9f1448',
-            meta: '#0668E1',
-            honefix: '#9e8125',
-            flyer: '#10b981',
-            hp: '#e57172',
-            referral: '#f59e0b'
+            hpb: '#ff99cc',
+            meta: '#ffb3d9',
+            honefix: '#ffc4e1',
+            flyer: '#ffcce5',
+            hp: '#ffb3d9',
+            referral: '#ffa6d4'
         };
         const mediaLightColors = {
-            hpb: '#fff0f5',
-            meta: '#e0f2fe',
-            honefix: '#fefce8',
-            flyer: '#d1fae5',
-            hp: '#fff0f0',
-            referral: '#fffbeb'
+            hpb: '#ffe6f2',
+            meta: '#ffe4f2',
+            honefix: '#fff0f8',
+            flyer: '#fff5fa',
+            hp: '#ffe4f2',
+            referral: '#ffe9f5'
         };
 
         function toggleModal(modalID){
@@ -1426,7 +1460,7 @@
             });
             if(effChart) effChart.destroy();
             effChart = new Chart(document.getElementById('mediaEfficiencyChart'), {
-                type: 'bar', data: { labels: mediaLabels, datasets: [ { label: 'CPA', data: data.map(d => d.cpa), backgroundColor: '#cbd5e1', yAxisID: 'y' }, { label: '入会率', data: data.map(d => d.rate), backgroundColor: '#e57172', yAxisID: 'y1' } ] },
+                type: 'bar', data: { labels: mediaLabels, datasets: [ { label: 'CPA', data: data.map(d => d.cpa), backgroundColor: '#ffd6eb', yAxisID: 'y' }, { label: '入会率', data: data.map(d => d.rate), backgroundColor: '#ffb3d9', yAxisID: 'y1' } ] },
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { position: 'left' }, y1: { position: 'right', max: 100 } } }
             });
         }
